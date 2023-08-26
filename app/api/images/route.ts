@@ -5,7 +5,7 @@ const API_URL = 'https://www.googleapis.com/customsearch/v1?'
 
 export async function GET(request: NextRequest) {
   const { browser, device } = userAgent(request)
-  if (browser.name || device.type !== 'mobile') {
+  if (browser.name) {
     throw new Error()
   }
   try {

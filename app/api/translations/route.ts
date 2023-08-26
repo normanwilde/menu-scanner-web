@@ -5,7 +5,7 @@ const API_URL = `https://translation.googleapis.com/language/translate/v2?key=${
 
 export async function POST(request: NextRequest) {
   const { browser, device } = userAgent(request)
-  if (browser.name || device.type !== 'mobile') {
+  if (browser.name) {
     throw new Error()
   }
   try {

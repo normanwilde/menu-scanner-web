@@ -5,7 +5,7 @@ const API_URL = `https://vision.googleapis.com/v1/images:annotate?key=${process.
 
 export async function POST(request: NextRequest) {
   const { browser, device } = userAgent(request)
-  if (browser.name || device.type !== 'mobile') {
+  if (browser.name) {
     throw new Error()
   }
   try {

@@ -4,8 +4,8 @@ import { NextRequest, NextResponse, userAgent } from 'next/server'
 const API_URL = 'https://www.googleapis.com/customsearch/v1?'
 
 export async function GET(request: NextRequest) {
-  const { browser } = userAgent(request)
-  if (browser.name) {
+  const { browser, device } = userAgent(request)
+  if (browser.name || device.type !== 'mobile') {
     throw new Error()
   }
   try {

@@ -4,8 +4,8 @@ import { NextRequest, NextResponse, userAgent } from 'next/server'
 const API_URL = `https://translation.googleapis.com/language/translate/v2?key=${process.env.GOOGLE_API_KEY}`
 
 export async function POST(request: NextRequest) {
-  const { browser } = userAgent(request)
-  if (browser.name) {
+  const { browser, device } = userAgent(request)
+  if (browser.name || device.type !== 'mobile') {
     throw new Error()
   }
   try {

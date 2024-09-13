@@ -37,7 +37,6 @@ export async function POST(request: NextRequest) {
       ],
       response_format: zodResponseFormat(FoodItemsResponseSchema, 'food_items'),
     })
-    console.log(JSON.stringify(completion))
 
     return NextResponse.json(completion.choices[0].message.parsed?.food_items)
   } catch {

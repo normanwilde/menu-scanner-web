@@ -17,18 +17,23 @@ const FoodItemsResponseSchema = z.object({
 
 export async function POST(request: NextRequest) {
   const { browser, device } = userAgent(request)
-  if (browser.name) {
+  if (browser.name || !process.env.OPEN_AI_PROMPT) {
     throw new Error()
   }
   try {
     const { text, language } = await request.json()
+
+    const systemPrompt = process.env.OPEN_AI_PROMPT.replace(
+      'LANGUAGE',
+      language,
+    )
 
     const completion = await openai.beta.chat.completions.parse({
       model: 'gpt-4o-mini',
       messages: [
         {
           role: 'system',
-          content: `You are a helpful assistant that extracts food items from text and formats them into JSON arrays. Add the original text and the translated version in ${language}. Format both original and translated texts so only the first letter is capitalized.`,
+          content: systemPrompt,
         },
         {
           role: 'user',
